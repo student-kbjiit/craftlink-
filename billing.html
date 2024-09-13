@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billing Page</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-mode">
+    <header>
+        <h1>Billing Summary</h1>
+    </header>
+    <main>
+        <h2>Order Summary</h2>
+        <ul id="billingItems" class="cart-items"></ul>
+        <h3 id="totalAmount" class="total-amount">Total: ₹0</h3>
+        <!-- Order Button -->
+        <button id="orderButton" class="order-button">Place Order</button>
+        <!-- Success Message (Initially hidden) -->
+        <p id="successMessage" class="success-message" style="display:none;">Order placed successfully!</p>
+    </main>
+
+    <script>
+        window.onload = function() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    
+    const billingItems = document.getElementById('billingItems');
+    const totalAmountDisplay = document.getElementById('totalAmount');
+    const orderButton = document.getElementById('orderButton');
+    const successMessage = document.getElementById('successMessage');
+
+    let totalAmount = 0;
+
+    // Display the cart items or a message if the cart is empty
+    if (cart.length === 0) {
+        const li = document.createElement('li');
+        li.textContent = 'No items in your cart.';
+        billingItems.appendChild(li);
+        orderButton.disabled = true; // Disable the order button if no items
+    } else {
+        cart.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = `${item.product} - ₹${item.price.toFixed(2)}`;
+            billingItems.appendChild(li);
+            totalAmount += item.price;
+        });
+
+        totalAmountDisplay.textContent = `Total: ₹${totalAmount.toFixed(2)}`;
+    }
+
+    // Add an event listener for the "Place Order" button
+    orderButton.addEventListener('click', function() {
+        // Show success message when the order is placed
+        successMessage.style.display = 'block';
+        // Clear the cart from localStorage
+        localStorage.removeItem('cart');
+        // Disable the button after order is placed
+        orderButton.disabled = true;
+    });
+};
+
+    </script>
+</body>
+</html>

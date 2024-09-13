@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - CraftLink</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-mode">
+    <header>
+        <h1>Welcome to CraftLink</h1>
+        <button class="cart-button" onclick="toggleCart()">Your Cart</button>
+    </header>
+    
+    <div class="product-grid">
+        <!-- Product 1 -->
+        <div class="product-frame">
+            <img src="paint1.jpg" alt="Shahi painting">
+            <h2>Shahi painting</h2>
+            <p>Description: A beautifully handcrafted shahi painting</p>
+            <p>Price: ₹600</p>
+            
+            <!-- Corrected Add to Cart Button -->
+            <button class="add-to-cart" data-product="Shahi painting" data-price="600" onclick="addToCart(this)">Add to Cart</button>
+        </div>
+        
+        <!-- Product 2 -->
+        <div class="product-frame">
+            <img src="paint2.jpg" alt="Rajsthani painting">
+            <h2>Rajsthani painting</h2>
+            <p>Description: Elegant Rajsthani painting for your home.</p>
+            <p>Price: ₹350</p>
+            <button class="add-to-cart" data-product="Rajsthani painting" data-price="350" onclick="addToCart(this)">Add to Cart</button>
+
+        </div>
+        <!-- Product 3 -->
+        <div class="product-frame" >
+            <img src="paint3.jpg" alt="Tribal painting">
+            <h2>Tribal painting</h2>
+            <p>Description: Tribal painting for decor.</p>
+            <p>Price: ₹800</p>
+            <button class="add-to-cart" data-product="Tribal painting" data-price="800" onclick="addToCart(this)">Add to Cart</button>
+
+        </div>
+        <!-- Product 4 -->
+        <div class="product-frame">
+            <img src="paint4.jpg" alt="Krishna painting">
+            <h2>Krishna painting</h2>
+            <p>Description: Handcrafted Krishna painting</p>
+            <p>Price: ₹500</p>
+            <button class="add-to-cart" data-product="krishna painting" data-price="500" onclick="addToCart(this)">Add to Cart</button>
+
+        </div>
+         <!-- Product 1 -->
+        <div class="product-frame">
+            <img src="home_decor1.jpg" alt="bamboo flower pot">
+            <h2>bamboo flower pot</h2>
+            <p>Description: A beautifully handcrafted flower pot</p>
+            <p>Price: ₹600</p>
+            <button class="add-to-cart" data-product="bamboo flower pot" data-price="600" onclick="addToCart(this)">Add to Cart</button>
+
+        </div>
+        <!-- Product 2 -->
+        <div class="product-frame" >
+            <img src="home_decor2.jpg" alt="Decorative vase">
+            <h2>Decorative vase</h2>
+            <p>Description: Elegant decorative vase for your home.</p>
+            <p>Price: ₹350</p>
+            <button class="add-to-cart" data-product="Decorative vase" data-price="350" onclick="addToCart(this)">Add to Cart</button>
+
+        </div>
+        <!-- Product 3 -->
+        <div class="product-frame" >
+            <img src="home_decor3.jpg" alt="Wall Hanging">
+            <h2>Wall Hanging</h2>
+            <p>Description: Wall hanging for decor.</p>
+            <p>Price: ₹800</p>
+            <button class="add-to-cart" data-product="Wall hanging" data-price="800" onclick="addToCart(this)">Add to Cart</button>
+
+        </div>
+        <!-- Product 4 -->
+        <div class="product-frame">
+            <img src="home_decor4.jpg" alt="Wooden vase">
+            <h2>Wooden vase</h2>
+            <p>Description: Handcrafted Wooden vase</p>
+            <p>Price: ₹500</p>
+            <button class="add-to-cart" data-product="woooden vase" data-price="500" onclick="addToCart(this)">Add to Cart</button>
+
+        </div>                
+        <!-- Repeat for Products 3 to 8 -->
+    </div>
+
+    <!-- Cart Slider -->
+    <div class="cart-sidebar" id="cartSidebar" >
+        <h2>Your Cart</h2>
+        <ul id="cartItems"></ul>
+        <button onclick="goToBilling()">Buy Now</button>
+    </div>
+    
+    <script>
+        let cart = [];
+
+function addToCart(button) {
+    // Get product name and price from data attributes
+    const product = button.getAttribute('data-product');
+    const price = parseFloat(button.getAttribute('data-price'));
+    
+    // Push product to the cart
+    cart.push({ product, price });
+    
+    // Update the cart display
+    updateCartDisplay();
+    
+    // Show alert when the item is added
+    alert(`${product} has been added to your cart.`);
+}
+
+function updateCartDisplay() {
+    const cartItems = document.getElementById('cartItems');
+    cartItems.innerHTML = ''; // Clear existing items
+    
+    cart.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = `${item.product} - ₹${item.price.toFixed(2)}`;
+        cartItems.appendChild(li);
+    });
+
+    // Enable or disable "Buy Now" button based on cart content
+    const buyButton = document.querySelector('.cart-sidebar button');
+    buyButton.disabled = cart.length === 0;
+}
+
+
+function toggleCart() {
+    const cartSidebar = document.getElementById('cartSidebar');
+    cartSidebar.classList.toggle('active');
+}
+
+function goToBilling() {
+    localStorage.setItem('cart', JSON.stringify(cart)); // Save cart to localStorage for billing page
+    window.location.href = 'billing.html'; // Redirect to billing page
+}
+
+    </script>
+</body>
+</html>
